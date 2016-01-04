@@ -2,8 +2,11 @@
 
 git clone --recurse-submodules https://github.com/tensorflow/tensorflow
 
-wget https://github.com/bazelbuild/bazel/releases/download/0.1.1/bazel-0.1.1-installer-linux-x86_64.sh
 BAZEL_INSTALLER=bazel-0.1.1-installer-linux-x86_64.sh
+if [ ! -f $BAZEL_INSTALLER ]; then
+    wget https://github.com/bazelbuild/bazel/releases/download/0.1.1/$BAZEL_INSTALLER
+fi
+
 chmod +x $BAZEL_INSTALLER
 
 if [ ! -f $HOME/local ]; then
