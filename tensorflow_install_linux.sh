@@ -1,4 +1,4 @@
-#!/usr/bin/bash
+#!/bin/bash
 
 git clone --recurse-submodules https://github.com/tensorflow/tensorflow
 
@@ -19,5 +19,10 @@ fi
 # sudo apt-get install python-numpy swig python-dev
 
 cd tensorflow && ./configure
-bazel build -c opt --config=cuda //tensorflow/cc:tutorials_example_trainer
-bazel-bin/tensorflow/cc/tutorials_example_trainer --use_gpu
+bazel build -c opt --config=cuda //tensorflow/tools/pip_package:build_pip_package
+bazel-bin/tensorflow/tools/pip_package/build_pip_package /tmp/tensorflow_pkg
+pip install $(echo /tmp/tensorflow_pkg/*whl)
+
+
+#bazel build -c opt --config=cuda //tensorflow/cc:tutorials_example_trainer
+#bazel-bin/tensorflow/cc/tutorials_example_trainer --use_gpu
