@@ -20,7 +20,9 @@ fi
 
 cd tensorflow && ./configure
 bazel build -c opt --config=cuda //tensorflow/tools/pip_package:build_pip_package
-bazel-bin/tensorflow/tools/pip_package/build_pip_package /tmp/tensorflow_pkg
+TMP_PKG=/tmp/tensorflow_pkg
+rm -f $TMP_PKG/*
+bazel-bin/tensorflow/tools/pip_package/build_pip_package $TMP_PKG
 pip install $(echo /tmp/tensorflow_pkg/*whl)
 
 
