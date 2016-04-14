@@ -20,10 +20,16 @@ fi
 
 cd tensorflow && ./configure
 bazel build -c opt --config=cuda //tensorflow/tools/pip_package:build_pip_package
-TMP_PKG=/tmp/tensorflow_pkg
+TMP_PKG=$HOME/tmp/tensorflow_pkg
+
+if [ ! -f $TMP_PKG ]; then
+    echo 'mkdir' $TMP_PKG
+    mkdir -p $TMP_PKG
+fi
+
 rm -f $TMP_PKG/*
 bazel-bin/tensorflow/tools/pip_package/build_pip_package $TMP_PKG
-pip install $(echo /tmp/tensorflow_pkg/*whl)
+pip install $(echo $TMP_PKG/*whl)
 
 
 #bazel build -c opt --config=cuda //tensorflow/cc:tutorials_example_trainer
